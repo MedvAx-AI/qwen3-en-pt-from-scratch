@@ -1,0 +1,12 @@
+* text=auto
+*.py text eol=lf
+*.md text eol=lf
+*.toml text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+*.ipynb text eol=lf
+
+# The checkpoint records the exact tokenizer bytes, including line endings.
+artifacts/tokenizer.json -text
+*.pt -text
+*.png -text
