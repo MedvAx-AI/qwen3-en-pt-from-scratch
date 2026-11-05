@@ -1,0 +1,15 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+build/
+dist/
+.DS_Store
+Thumbs.db
+.env
+.env.*
+assignment2_opus100_artifacts/
+assignment2_opus100_artifacts.zip

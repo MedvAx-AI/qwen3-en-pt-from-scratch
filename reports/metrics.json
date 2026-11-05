@@ -1,0 +1,16 @@
+{
+  "selected_epoch": 7,
+  "best_val_loss": 3.255859127508724,
+  "test_loss": 3.3053258281973634,
+  "test_perplexity": 27.25742137855214,
+  "autoregressive_corpus_bleu": 9.518995846291961,
+  "bleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.6.0",
+  "test_examples": 991,
+  "max_new_tokens": 97,
+  "decoding": "greedy, prefix recomputation, causal attention",
+  "epochs_completed": 9,
+  "training_seconds": 565.1006858449999,
+  "empty_hypotheses": 0,
+  "normalized_exact_matches": 17,
+  "adjacent_repeated_trigram_hypotheses": 22
+}

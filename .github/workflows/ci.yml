@@ -1,0 +1,28 @@
+name: CPU tests
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - name: Install CPU runtime and package
+        run: |
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -e .
+      - name: Test architecture, checkpoint, tokenizer, CLI and experiment evidence
+        run: python -m unittest discover -s tests -v
+      - name: Run the command-line demo
+        run: python -m qwen3_translation "You can't tell what's inside!" --device cpu

@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qwen3-en-pt-from-scratch"
+version = "0.1.0"
+description = "A hand-written 5M-parameter Qwen3 Dense decoder trained from scratch for English-to-Portuguese translation"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["torch>=2.3,<3", "tokenizers==0.22.2"]
+
+[project.optional-dependencies]
+train = ["datasets==5.1.0", "huggingface-hub==1.33.0", "sacrebleu==2.6.0",
+         "matplotlib>=3.8", "tqdm>=4.66", "nbconvert>=7.16", "ipykernel>=6.29"]
+
+[project.scripts]
+qwen3-translate = "qwen3_translation.inference:main"
+
+[project.urls]
+Repository = "https://github.com/MedvAx-AI/qwen3-en-pt-from-scratch"
+
+[tool.setuptools.packages.find]
+where = ["src"]
