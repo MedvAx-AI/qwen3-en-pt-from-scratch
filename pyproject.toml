@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "A hand-written 5M-parameter Qwen3 Dense decoder trained from scratch for English-to-Portuguese translation"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = ["torch>=2.3,<3", "tokenizers==0.22.2"]
+dependencies = ["torch>=2.3,<3", "tokenizers==0.22.2", "numpy>=1.26,<3"]
 
 [project.optional-dependencies]
 train = ["datasets==5.1.0", "huggingface-hub==1.33.0", "sacrebleu==2.6.0",
