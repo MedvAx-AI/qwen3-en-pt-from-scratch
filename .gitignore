@@ -13,3 +13,7 @@ Thumbs.db
 .env.*
 assignment2_opus100_artifacts/
 assignment2_opus100_artifacts.zip
+mlflow.db*
+mlruns/
+mlartifacts/
+runs/

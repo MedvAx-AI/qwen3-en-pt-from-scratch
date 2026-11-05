@@ -21,7 +21,7 @@ jobs:
       - name: Install CPU runtime and package
         run: |
           python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
-          python -m pip install -e .
+          python -m pip install -e ".[train,tracking]"
       - name: Test architecture, checkpoint, tokenizer, CLI and experiment evidence
         run: python -m unittest discover -s tests -v
       - name: Run the command-line demo

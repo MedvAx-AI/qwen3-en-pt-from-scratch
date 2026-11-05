@@ -13,9 +13,12 @@ dependencies = ["torch>=2.3,<3", "tokenizers==0.22.2", "numpy>=1.26,<3"]
 [project.optional-dependencies]
 train = ["datasets==5.1.0", "huggingface-hub==1.33.0", "sacrebleu==2.6.0",
          "matplotlib>=3.8", "tqdm>=4.66", "nbconvert>=7.16", "ipykernel>=6.29"]
+tracking = ["mlflow==3.18.0"]
 
 [project.scripts]
 qwen3-translate = "qwen3_translation.inference:main"
+qwen3-train = "qwen3_translation.train:main"
+qwen3-experiments = "qwen3_translation.experiments:main"
 
 [project.urls]
 Repository = "https://github.com/MedvAx-AI/qwen3-en-pt-from-scratch"
