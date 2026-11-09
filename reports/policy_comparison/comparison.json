@@ -1,0 +1,85 @@
+{
+  "protocol": "matched-learning-rate-policies-v1",
+  "selection_metric": "minimum validation target-token loss",
+  "runs": [
+    {
+      "run_name": "constant_3e4",
+      "mlflow_run_id": "db0b8c073eda477ab72e0131d8040edc",
+      "best_validation_loss": 3.261495411334055,
+      "selected_epoch": 7,
+      "completed_epochs": 9,
+      "training_seconds": 576.0096161580001,
+      "optimizer_steps": 13937,
+      "skipped_updates": 4,
+      "parameter_count": 5065216,
+      "selection_metric": "validation_loss",
+      "test_evaluated": false,
+      "validation_generation": {
+        "bleu": 10.694434173734495,
+        "bleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.6.0",
+        "examples": 984,
+        "empty_hypotheses": 0
+      }
+    },
+    {
+      "run_name": "constant_1e4",
+      "mlflow_run_id": "c78fc13792c1430091e2a7d00ca8aff7",
+      "best_validation_loss": 4.064806053905682,
+      "selected_epoch": 7,
+      "completed_epochs": 9,
+      "training_seconds": 577.9653761870001,
+      "optimizer_steps": 13935,
+      "skipped_updates": 6,
+      "parameter_count": 5065216,
+      "selection_metric": "validation_loss",
+      "test_evaluated": false,
+      "validation_generation": {
+        "bleu": 4.758528242175737,
+        "bleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.6.0",
+        "examples": 984,
+        "empty_hypotheses": 0
+      }
+    },
+    {
+      "run_name": "warmup_cosine_3e4",
+      "mlflow_run_id": "d4310627780844e0aeaec3083e055ff0",
+      "best_validation_loss": 3.353656568108787,
+      "selected_epoch": 6,
+      "completed_epochs": 8,
+      "training_seconds": 511.5999781109999,
+      "optimizer_steps": 12388,
+      "skipped_updates": 4,
+      "parameter_count": 5065216,
+      "selection_metric": "validation_loss",
+      "test_evaluated": false,
+      "validation_generation": {
+        "bleu": 9.98141354260401,
+        "bleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.6.0",
+        "examples": 984,
+        "empty_hypotheses": 0
+      }
+    }
+  ],
+  "selected_run": "constant_3e4",
+  "final_test": {
+    "test_loss": 3.3211001893217436,
+    "test_perplexity": 27.69079892725072,
+    "test_bleu": 9.446720741967354,
+    "bleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.6.0",
+    "examples": 991,
+    "empty_hypotheses": 0
+  },
+  "evaluation_run_id": "e41a781c376c4f2f9be4336ea677e8a0",
+  "dataset_revision": "805090dc28bf78897da9641cdf08b61287580df9",
+  "retained_counts": {
+    "train": 49567,
+    "validation": 984,
+    "test": 991
+  },
+  "limitations": [
+    "One seed; no confidence interval or multi-seed robustness claim.",
+    "The original assignment test outputs were already inspected; this is not a newly unseen benchmark.",
+    "Warmup+cosine is one combined policy, not an isolated warmup ablation.",
+    "Refactored loader starts with a fresh shuffle generator; original notebook consumed a preview batch."
+  ]
+}

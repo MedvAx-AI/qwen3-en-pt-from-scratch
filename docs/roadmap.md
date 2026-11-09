@@ -1,10 +1,9 @@
 # Next experiments
 
-The current repository packages one completed baseline. The items below are
-**planned, not completed results**. Preserve the existing checkpoint and metrics
-so any future improvement can be compared with an immutable baseline.
+The repository packages the original notebook baseline and a standalone pipeline
+for matched learning-rate comparisons. The items below extend that work.
 
-## 1. Add a controlled comparison
+## 1. Compare architectures on the same split
 
 Train a small encoder–decoder baseline with the same tokenizer, filtered splits,
 sampling seed and a documented parameter/training budget. Compare validation
@@ -15,11 +14,11 @@ training-data advantage, not a controlled architecture ablation.
 **Evidence needed:** runnable configuration, selected checkpoints, matched
 evaluation protocol, learning curves and measured results for both systems.
 
-## 2. Improve generalization before adding a UI
+## 2. Check robustness and improve generalization
 
-The existing validation curve shows overfitting after epoch 7. Try one change at
-a time: a learning-rate schedule/warmup, more training pairs, or documented
-alignment/duplicate cleaning. Use validation to select the change. An ablation
+The original validation curve shows overfitting after epoch 7. Repeat the
+learning-rate comparison with additional seeds, then try more training pairs
+or documented alignment and duplicate cleaning. Use validation to select each change. An ablation
 that removes QK-Norm can test its effect, but it would no longer meet the original
 Qwen3 architecture contract and must be labeled as a separate experimental model.
 

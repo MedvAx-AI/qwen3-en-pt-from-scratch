@@ -10,7 +10,8 @@ tests, complete experiment outputs and an honest analysis of translation errors.
 
 [Русское описание](README.ru.md) · [Executed experiment](notebooks/experiment.ipynb)
 · [Russian annotated notebook / defense guide](notebooks/experiment_ru.ipynb)
-· [Model card](docs/model-card.md) · [Next experiments](docs/roadmap.md)
+· [Model card](docs/model-card.md) · [Training and MLflow](docs/training.md)
+· [Next experiments](docs/roadmap.md)
 
 This is an **educational architecture and training project**, not a pretrained
 Qwen release or a production translator. Corpus BLEU is **9.52** on a declared
@@ -107,7 +108,7 @@ experiment. The reusable inference wrapper adds input validation, device
 selection and a tokenizer/checkpoint hash check. The original assignment already
 provided the data/training/evaluation scaffold; see [provenance](NOTICE.md).
 
-## Recorded experiment
+## Original notebook baseline
 
 | Item | Value |
 | --- | ---: |
@@ -162,7 +163,41 @@ Across 991 outputs there are 0 empty hypotheses, 17 normalized exact reference
 matches and 22 immediately repeated word-trigram cases. Those diagnostics are
 not semantic accuracy and miss some character/subword repetition.
 
-## Reproduce training and evaluation
+## Train from the command line
+
+The standalone trainer uses JSON configurations and tracks checkpoints, data
+and source hashes, hyperparameters and per-epoch metrics in local MLflow.
+
+```bash
+python -m pip install -e ".[train,tracking]"
+qwen3-train --config configs/constant_3e4.json --output runs/baseline --device cuda
+```
+
+See [training and MLflow](docs/training.md) for the matched comparison command,
+local tracking UI and instructions to import the recorded runs.
+
+## Controlled learning-rate comparison
+
+Three full Colab runs on a Tesla T4 used the same 49,567 training pairs,
+984 validation pairs, tokenizer, model initialization and seed. The selected
+configuration minimized validation target-token loss.
+
+| Learning-rate policy | Best validation loss ↓ | Validation BLEU ↑ | Selected / completed epoch |
+| --- | ---: | ---: | ---: |
+| Constant `3e-4` | **3.2615** | **10.6944** | 7 / 9 |
+| Constant `1e-4` | 4.0648 | 4.7585 | 7 / 9 |
+| Warmup + cosine, peak `3e-4` | 3.3537 | 9.9814 | 6 / 8 |
+
+The selected `3e-4` checkpoint achieved **9.4467 test BLEU** and 27.6908
+perplexity on 991 pairs. This is a one-seed comparison. The two alternative
+policies gave higher validation loss within the shared training budget.
+
+![Measured training and validation losses for all three policies](assets/policy_loss_comparison.png)
+
+[Comparison and full epoch history](reports/policy_comparison) ·
+[MLflow history download](https://github.com/MedvAx-AI/qwen3-en-pt-from-scratch/releases/tag/policy-comparison-v1)
+
+## Reproduce the original notebook
 
 Open the [executed notebook in Colab](https://colab.research.google.com/github/MedvAx-AI/qwen3-en-pt-from-scratch/blob/main/notebooks/experiment.ipynb),
 select a T4 GPU runtime, and run all cells from a fresh session. The existing
@@ -194,35 +229,38 @@ preinstalled Transformers/cuDF packages; use a dedicated environment locally.
 ## Tests
 
 ```bash
+python -m pip install -e ".[train,tracking]"
 python -m unittest discover -s tests -v
 ```
 
-The nine CPU tests cover numerical RMSNorm/RoPE behavior, exact consecutive KV
+The CPU tests cover numerical RMSNorm/RoPE behavior, exact consecutive KV
 grouping, causal/padding invariance, unequal attention/hidden widths, weight
 tying, finite gradients and tiny-continuation learning, real checkpoint reload,
 tokenizer mismatch rejection, input/context limits, CLI output and consistency
-between the executed notebook and reported metrics. CI runs the tests and a
-real translation on CPU.
+between the executed notebook and reported metrics. Small fixture runs exercise
+data preparation, training, validation-only selection, test generation and
+MLflow export and restore with SQLite. CI runs the tests and an offline translation.
 
 ## Project layout
 
 ```text
-src/qwen3_translation/  Hand-written architecture and offline inference/CLI
+src/qwen3_translation/  Architecture, inference, training, evaluation and tracking
+configs/               Explicit settings for the three training policies
 artifacts/             best.pt, tokenizer.json and SHA256 checksums
 notebooks/             Executed experiment and Russian commented study copy
 reports/               Actual metrics, history, configuration and translations
 assets/                Actual learning-curve figure
-tests/                 Standard-library numerical and inference tests
-docs/                  Model card and next experiments
+tests/                 Numerical, data, training, tracking and inference tests
+docs/                  Model card, training guide and next experiments
 ```
 
 ## Portfolio scope
 
 The current deliverable demonstrates Transformer internals, correct masking,
-training from scratch, reproducible evidence, checkpoint packaging and tested
-inference. Improving translation quality is a separate, measurable next step:
-see the [roadmap](docs/roadmap.md). No baseline comparison, ablation study,
-beam-search improvement or production-readiness claim is made.
+training from scratch, checkpoint packaging and tested inference. The policy
+comparison adds a reproducible experiment workflow with shared data and a fixed
+selection rule. See the [roadmap](docs/roadmap.md) for architecture and decoding
+comparisons that would extend the study.
 
 ## References and provenance
 

@@ -9,6 +9,8 @@ preprocessing, tokenizer setup, batching, basic training/early-stopping loop,
 greedy generation and evaluation structure. The completed work implements the
 missing model components and adds checks, mixed precision, reproducibility
 metadata, artifact exports, analysis and a reusable inference package.
+The standalone pipeline adds configuration-based training, MLflow tracking
+and a controlled learning-rate comparison on the same corpus.
 The repository does not claim the supplied scaffold or architectural ideas as
 an original research contribution.
 

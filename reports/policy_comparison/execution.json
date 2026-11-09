@@ -1,0 +1,13 @@
+{
+  "colab_run_date": "2026-11-09",
+  "device": "Tesla T4",
+  "python": "3.13.16",
+  "torch": "2.14.1+cu130",
+  "mlflow": "3.18.0",
+  "source_commit": "e6231910d3d0cbcd6dd51542e7feb7a6c8cc0270",
+  "executed_notebook_sha256": "7e26f4bdb1a2bd7778e51e4a9c3b3db680e48d923443b6b218cff9d7fc137d45",
+  "generated_runtime_archive": {
+    "bytes": 57188614,
+    "sha256": "dc84753966edebd5bd0be219c08f236ff850d9d75e484ed5727ca8f186d436d3"
+  }
+}

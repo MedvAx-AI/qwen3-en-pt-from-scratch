@@ -5,6 +5,8 @@
 Tiny Qwen3 Dense-style English-to-Portuguese decoder-only language model,
 version 0.1.0, trained from random initialization. Intended for learning,
 architecture inspection, reproducibility exercises and portfolio demonstrations.
+This card describes the original checkpoint shipped in `artifacts/`.
+See the [training guide](training.md) for subsequent runs and selection criteria.
 It is not an official Qwen checkpoint and is not suitable for reliable translation
 of consequential content. The architecture follows the assignment's scaled-down
 Qwen3 Dense contract; the weights and tokenizer are specific to this experiment.
@@ -78,8 +80,8 @@ SacreBLEU signature:
 - Validation overfitting after epoch 7 despite falling training loss.
 - Domain mixtures, Portuguese regional variation and noisy alignments.
 - One reference can penalize valid paraphrases; BLEU does not verify meaning.
-- Scores do not describe the full corpus or support comparison with pretrained
-  systems, other tokenizers, or a matched baseline that has not been run.
+- Scores apply to the declared subset and evaluation protocol. Comparisons with
+  other tokenizers or pretrained systems require a common evaluation design.
 
 Surface diagnostics: 0 empty hypotheses, 17 normalized exact reference matches,
 22 immediately repeated word-trigram cases. The repetition heuristic misses

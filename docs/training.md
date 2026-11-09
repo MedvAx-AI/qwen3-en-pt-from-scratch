@@ -56,8 +56,8 @@ comparisons rather than attributing differences from the old baseline to policy.
 
 Outputs include `comparison.json`, CSV, loss curves, test translations and a
 portable `mlflow_bundle/`. The `test_evaluated: false` field on individual training
-summaries means training did not access test; the suite's separate final-evaluation
-run contains the selected model's test metrics.
+summaries applies to the training run. The suite's separate final evaluation
+contains the selected model's test metrics.
 
 ## Inspect MLflow
 
@@ -95,6 +95,30 @@ Restoration creates new local run IDs and keeps `original_run_id` tags, original
 timestamps and step numbers. Repeated restoration intentionally creates another
 copy; import once per desired copy. MLflow's normal UI can inspect restored runs.
 Tests restore after deleting the original source store and compare artifact bytes.
+
+## Import the recorded comparison
+
+The [recorded comparison](../reports/policy_comparison) comes from three complete
+Colab runs on 9 November 2026. The selected constant `3e-4` policy reached
+validation loss 3.2615 and test BLEU 9.4467. The recorded test is the same
+filtered OPUS-100 protocol used in the original notebook, which scored 9.5190
+BLEU. The new run used a fresh shuffle generator and a newer PyTorch runtime.
+
+Download `qwen3-mlflow-history.zip` from the
+[comparison release](https://github.com/MedvAx-AI/qwen3-en-pt-from-scratch/releases/tag/policy-comparison-v1)
+and extract it into `runs/colab-history`.
+
+```bash
+python -m qwen3_translation.tracking restore --bundle runs/colab-history --tracking-uri sqlite:///mlflow.db --experiment qwen3-colab-history
+mlflow ui --backend-store-uri sqlite:///mlflow.db --host 127.0.0.1 --port 5000
+```
+
+The saved notebook supplied all 26 epoch rows, configuration identities,
+validation BLEU, and the selected run's test summary. The imported records carry
+the original `colab_run_id` and new timestamps. The Colab runtime expired before
+its full ZIP could be retrieved. The release includes metric history, configs and
+the loss figure. To generate new checkpoints, rerun the comparison command above.
+For an offline translation demo use the original model in `artifacts/`.
 
 ## Why no Airflow or ClearML deployment?
 
